@@ -9,6 +9,11 @@ namespace Umbraco9Docker
     {
         public static void Main(string[] args)
             => CreateHostBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    // /run/secrets/ is the default secrets path for Linux Docker containers
+                    config.AddKeyPerFile(directoryPath: "/run/secrets/", optional: true);
+                })
                 .Build()
                 .Run();
 
